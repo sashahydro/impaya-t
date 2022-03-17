@@ -4,24 +4,27 @@ export interface DBUnit {
 
 export interface Currency extends DBUnit {
     key: string;
-    title: string;
-    title_short: string;
+    title?: string;
     sign_unicode: string;
 }
 
 export interface Wallet extends DBUnit {
     balance: string;
-    currency: Currency;
+    currency_id: number;
     title: string;
 }
 
 export interface Transaction extends DBUnit {
     date: string; // iso
-    operation: 'income' | 'outcome';
+    operation: 'income' | 'expense';
     amount: string;
-    currency: Currency;
+    currency_id: number;
 }
 
-export interface Card {
-    
+export interface Card extends DBUnit {
+    card_expire: string | null;
+    card_holder: string | null;
+    card_number: string | null;
+    currency_id: number;
+    system: 'Mastercard' | 'Visa';
 }

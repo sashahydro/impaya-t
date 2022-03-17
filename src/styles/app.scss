@@ -1,0 +1,41 @@
+@import './bootstrap-custom.scss';
+
+
+// LAYOUT / GRID
+html, body {
+    height: 100%;
+}
+
+#root {
+    align-items: stretch;
+    display: flex;
+    height: 1px;
+    min-height: 100%;
+}
+
+.dashboard {
+    align-items: stretch;
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    width: 100%;
+
+    &-sidebar {
+        background: $dark;
+        flex-grow: 0;
+        flex-shrink: 0;
+        width: 60px;
+    }
+
+    &-content {
+        flex-grow: 1;
+        flex-shrink: 0;
+        height: 100%;
+        overflow: hidden;
+    }
+}
+
+.container {
+    margin: 0 auto;
+
+}

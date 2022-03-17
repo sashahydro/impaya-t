@@ -1,26 +1,69 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from 'react';
+import { Link, Navigate, Outlet, Route, Routes } from 'react-router-dom';
+import api from './dummy-data/dummy-api';
+import { Card, Currency, Wallet } from './dummy-data/types';
+import './styles/app.scss';
+import PageNotFound from './views/page-not-found';
+
+
+function AppContent() {
+    return (
+        <div className="dashboard-content">
+            <Outlet />
+        </div>
+    );
+}
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    // get initial data
+    const getInitialData = async () => {
+        Promise.all([
+            api.read<Currency>('currencies'),
+            api.read<Card>('cards'),
+            api.read<Wallet>('wallets')
+        ])
+        .then((response) => {
+            const [currencies, cards, wallets] = response;
+
+            console.log(currencies, cards, wallets);
+        })
+    };
+
+    useEffect(() => {
+        getInitialData();
+    }, []);
+
+    return (
+        <div className="dashboard">
+            <div className="dashboard-sidebar">
+                <Link to="/me">AAA</Link>
+                <Link to="/transactions">BBB</Link>
+            </div>
+
+            <Routes>
+                <Route
+                    path="/"
+                    element={<AppContent />}>
+                    <Route
+                        index
+                        element={<Navigate to="/me" />}
+                    />
+                    <Route
+                        path="/me"
+                        element={<div>aaa</div>}
+                    />
+                    <Route
+                        path="/transactions"
+                        element={<div>bbb</div>}
+                    />
+                    <Route
+                        path="/*"
+                        element={<PageNotFound />}
+                    />
+                </Route>
+            </Routes>
+        </div>
+    );
 }
 
 export default App;

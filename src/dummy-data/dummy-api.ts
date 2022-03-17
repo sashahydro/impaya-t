@@ -4,20 +4,15 @@ import { DBUnit } from './types';
 
 type Paths = keyof typeof data;
 
-export default class API {
-    async read<T extends DBUnit>(path: Paths): Promise<T> {
-        const resp = await fetch(`./data/${path}.json`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
+class API {
+    async read<T extends DBUnit>(path: Paths): Promise<T[]> {
+        return new Promise((resolve, reject) => {
+            if (!data[path]) {
+                reject(`API.read: Invalid path ${path}`);
             }
+
+            resolve((data[path] as unknown) as T[]);
         });
-
-        if (!resp.ok) {
-            throw new Error(resp.statusText);
-        }
-
-        return resp.json() as Promise<T>;
     }
 
     async create<T extends DBUnit>(path: Paths, payload: T[]): Promise<T[]> {
@@ -36,3 +31,7 @@ export default class API {
         })
     }
 }
+
+const api = new API();
+
+export default api;

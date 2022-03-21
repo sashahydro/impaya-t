@@ -1,44 +1,85 @@
-import { useEffect } from 'react';
-import { Link, Navigate, Outlet, Route, Routes } from 'react-router-dom';
-import api from './dummy-data/dummy-api';
-import { Card, Currency, Wallet } from './dummy-data/types';
-import './styles/app.scss';
+import { useEffect, useState } from 'react';
+import {
+    Navigate,
+    Outlet,
+    Route,
+    Routes
+} from 'react-router-dom';
+import { getCards } from './store/features/cards';
+import { getCurrencies } from './store/features/currencies';
+import { getWallets } from './store/features/wallets';
+import { useDispatch } from './store/hooks';
+import DashboardSidebar from './views/dashboard-sidebar';
 import PageNotFound from './views/page-not-found';
+import './styles/app.scss';
+import HomeView from './views/home-view';
 
 
-function AppContent() {
-    return (
-        <div className="dashboard-content">
-            <Outlet />
-        </div>
-    );
-}
+
 
 function App() {
-    // get initial data
-    const getInitialData = async () => {
-        Promise.all([
-            api.read<Currency>('currencies'),
-            api.read<Card>('cards'),
-            api.read<Wallet>('wallets')
-        ])
-        .then((response) => {
-            const [currencies, cards, wallets] = response;
+    const dispatch = useDispatch();
 
-            console.log(currencies, cards, wallets);
-        })
+    const [isLoaded, setLoadedState] = useState(false);
+    const [initError, setLoadingError] = useState<null | Error>(null);
+
+    // get initial data
+    useEffect(() => {
+        const getInitialData = () => {
+            Promise.all([
+                dispatch(getCurrencies()),
+                dispatch(getCards()),
+                dispatch(getWallets())
+            ])
+                .catch((e) => {
+                    // critical data error
+                    setLoadingError(e);
+                })
+                .finally(() => {
+                    setLoadedState(true);
+                });
+        };
+
+        if (!isLoaded) {
+            getInitialData();
+        }
+    }, [isLoaded, dispatch]);
+
+
+
+    const AppContent = () => {
+        const _renderContent = () => {
+            if (!isLoaded) {
+                return (
+                    <div>{/* your fancy prealoder here */}</div>
+                )
+            }
+
+            if (initError === null) {
+                return (<Outlet />);
+            }
+
+            return (
+                <div className="alert alert-danger">
+                    Ошибка при загрузке приложения: {initError.message}
+                </div>
+            );
+        };
+
+        return (
+            <div className="dashboard-content">
+                <div className="container dashboard-pt">
+                    {_renderContent()}
+                </div>
+            </div>
+        );
     };
 
-    useEffect(() => {
-        getInitialData();
-    }, []);
+
 
     return (
         <div className="dashboard">
-            <div className="dashboard-sidebar">
-                <Link to="/me">AAA</Link>
-                <Link to="/transactions">BBB</Link>
-            </div>
+            <DashboardSidebar />
 
             <Routes>
                 <Route
@@ -50,7 +91,7 @@ function App() {
                     />
                     <Route
                         path="/me"
-                        element={<div>aaa</div>}
+                        element={<HomeView />}
                     />
                     <Route
                         path="/transactions"

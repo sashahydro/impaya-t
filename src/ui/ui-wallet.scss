@@ -1,0 +1,25 @@
+@import '../styles/bootstrap-vars.scss';
+@import './panel';
+
+.wallet {
+    background-color: #665AE8;
+    color: $white;
+    width: 170px;
+
+    &-title {
+        font-size: 11px;
+    }
+
+    &-cur-sign {
+        font-size: 24px;
+        line-height: 1;
+    }
+
+    &-balance {
+        font-weight: 700;
+    }
+
+    &-currency {
+        font-size: 10px;
+    }
+}

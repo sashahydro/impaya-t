@@ -1,0 +1,22 @@
+@import '../styles/bootstrap-vars';
+@import '../styles/mixins';
+@import './panel';
+
+.card {
+    background: $white;
+    box-shadow: 0px 4px 20px rgba(#000, 0.1);
+    width: 200px;
+
+    // &-logo {
+    //     max-height: 46px;
+    // }
+
+    &-ps-text {
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    &-number {
+        font-size: 12px;
+    }
+}

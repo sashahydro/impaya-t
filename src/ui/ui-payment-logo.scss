@@ -1,0 +1,44 @@
+@import '../styles/functions.scss';
+
+$logoMap: (
+    mastercard: (
+        pt: perc(618.02, 1000)
+    ),
+    mir: (
+        pt: perc(229, 809)
+    ),
+    unionpay: (
+        pt: perc(160, 256)
+    ),
+    visa: (
+        pt: perc(139.59, 432)
+    )
+);
+
+.ps-logo {
+    background-color: transparent;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    &-size_regular {
+        width: 46px;
+    }
+
+    &::after {
+        content: '';
+        display: block;
+    }
+
+    &-brand {
+        @each $brand, $brandProps in $logoMap {
+            &_#{$brand} {
+                background-image: url('../assets/#{$brand}_logo.svg');
+
+                &::after {
+                    padding-top: map-get($brandProps, 'pt');
+                }
+            }
+        }
+    }
+}

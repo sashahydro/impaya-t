@@ -1,9 +1,14 @@
-@import './bootstrap-custom.scss';
+@import './bootstrap.scss';
+@import './mixins.scss';
 
 
 // LAYOUT / GRID
 html, body {
     height: 100%;
+}
+
+body {
+    color: $body-color;
 }
 
 #root {
@@ -17,25 +22,73 @@ html, body {
     align-items: stretch;
     display: flex;
     flex: 1;
-    flex-direction: row;
+    overflow: hidden;
     width: 100%;
 
     &-sidebar {
         background: $dark;
         flex-grow: 0;
         flex-shrink: 0;
-        width: 60px;
     }
 
     &-content {
         flex-grow: 1;
         flex-shrink: 0;
-        height: 100%;
-        overflow: hidden;
+    }
+
+    @include media(below_md) {
+        flex-direction: column;
+
+        &-sidebar {
+            height: 50px;
+        }
+    }
+
+    @include media(above_md) {
+        flex-direction: row;
+
+        &-sidebar {
+            width: 60px;
+        }
+
+        &-content {
+            height: 100%;
+            overflow: auto;
+        }
+
+        &-pt {
+            box-sizing: border-box;
+            padding-top: 100px;
+        }
     }
 }
 
-.container {
-    margin: 0 auto;
+// .container {
+//     box-sizing: border-box;
 
+//     @include media(below_md) {
+//         padding: 15px;
+//         width: 100%;
+//     }
+
+//     @include media(md) {
+//         width: auto
+//     }
+// }
+
+
+.panel {
+    border-radius: 20px;
+    padding: 16px;
+}
+
+// text
+h1, h2, h3, .h1, .h2, .h3 {
+    font-weight: normal;
+}
+
+.text-overflow-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }

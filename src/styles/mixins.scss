@@ -1,0 +1,41 @@
+@import 'bootstrap/scss/variables';
+
+@function getBreakpoint($bp) {
+    @return map-get($grid-breakpoints, $bp)
+}
+
+@mixin media($bp) {
+    @if $bp == xs {
+        @media (max-width: getBreakpoint(sm) - 1) { @content }
+    }
+    @else if $bp == sm {
+        @media (min-width: getBreakpoint(sm)) and (max-width: getBreakpoint(md) - 1) { @content }
+    }
+    @else if $bp == above_sm {
+        @media (min-width: getBreakpoint(sm)) { @content }
+    }
+    @else if $bp == md {
+        @media (min-width: getBreakpoint(md)) and (max-width: getBreakpoint(lg) - 1) { @content }
+    }
+    @else if $bp == below_md {
+        @media (max-width: getBreakpoint(md)) { @content }
+    }
+    @else if $bp == above_md {
+        @media (min-width: getBreakpoint(md)) { @content }
+    }
+    @else if $bp == lg {
+        @media (min-width: getBreakpoint(lg)) and (max-width: getBreakpoint(xl) - 1) { @content }
+    }
+    @else if $bp == below_lg {
+        @media (max-width: getBreakpoint(lg)) { @content }
+    }
+    @else if $bp == above_lg {
+        @media (min-width: getBreakpoint(lg)) { @content }
+    }
+    @else if $bp == below_xl {
+        @media (max-width: getBreakpoint(xl)) { @content }
+    }
+    @else if $bp == xl {
+        @media (min-width: getBreakpoint(xl)) { @content }
+    }
+}

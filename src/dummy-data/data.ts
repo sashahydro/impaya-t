@@ -1,35 +1,7 @@
 import randomInt from '../utils/random-int';
 import dateCreator from '../utils/date-creator';
-import {
-    Card,
-    Currency,
-    Transaction,
-    Wallet
-} from './types';
-
-
-
-/* CARDS */
-const cards: Card[] = [
-    {
-        id: 1,
-        card_expire: null,
-        card_holder: null,
-        card_number: '1334',
-        currency_id: 1,
-        system: 'Mastercard'
-    },
-    {
-        id: 2,
-        card_expire: null,
-        card_holder: null,
-        card_number: '5776',
-        currency_id: 2,
-        system: 'Visa'
-    }
-];
-
-
+import getId from '../utils/getId';
+import copy from '../utils/copy';
 
 
 /* CURRENCIES */
@@ -41,17 +13,17 @@ export enum CurrencyKey {
 
 const currencies: Currency[] = [
     {
-        id: 1,
+        id: getId('cur'),
         key: CurrencyKey.EUR,
         sign_unicode: '\u20ac'
     },
     {
-        id: 2,
+        id: getId('cur'),
         key: CurrencyKey.RUB,
         sign_unicode: '\u20bd',
     },
     {
-        id: 3,
+        id: getId('cur'),
         key: CurrencyKey.USD,
         sign_unicode: '\u0024',
     }
@@ -62,16 +34,41 @@ const currenciesL = currencies.length;
 
 
 
+/* CARDS */
+const cards: Card[] = [
+    {
+        id: getId('card'),
+        card_expire: null,
+        card_holder: null,
+        card_number: '1334',
+        currency: copy(currencies[0]),
+        system: 'Mastercard',
+        title: 'Title #1'
+    },
+    {
+        id: getId('card'),
+        card_expire: null,
+        card_holder: null,
+        card_number: '5776',
+        currency: copy(currencies[1]),
+        system: 'Visa',
+        title: 'Title #2'
+    }
+];
+
+
+
+
 /* TRANSACTIONS */
 const getTransactionDate = dateCreator(new Date(2020, 0, 1), 3, 15);
 
-function createTransaction(_: unknown, i: number): Transaction {
+function createTransaction(): Transaction {
     return {
-        id: i,
+        id: getId('ta'),
         date: getTransactionDate(),
         operation: (['income', 'expense'] as const)[randomInt(0, 1)],
         amount: (Math.random() * 10000).toFixed(2),
-        currency_id: randomInt(1, currenciesL) // dirty
+        currency_id: currencies[randomInt(0, currenciesL - 1)].id
     };
 }
 
@@ -81,7 +78,20 @@ const transactions: Transaction[] = Array.from({ length: 100 }, createTransactio
 
 
 /* WALLETS */
-const wallets: Wallet[] = [];
+const wallets: Wallet[] = [
+    {
+        id: getId('wal'),
+        balance: '180322.42',
+        currency: copy(currencies[0]),
+        title: 'Кошелек #1'
+    },
+    {
+        id: getId('wal'),
+        balance: '22333322.42',
+        currency: copy(currencies[2]),
+        title: 'Кошелек #2'
+    }
+];
 
 
 
@@ -97,5 +107,7 @@ const data: {
     currencies,
     transactions
 };
+
+export type ApiDataKeys = keyof typeof data;
 
 export default data;

@@ -1,0 +1,15 @@
+@function ratio($a, $b, $mul){
+    @return ($a / $b * $mul);
+}
+
+@function vw($a, $b, $mul: 100) {
+    @return unquote(ratio($a, $b, $mul) + 'vw');
+}
+
+@function perc($a, $b, $mul: 100) {
+    @return unquote(ratio($a, $b, $mul) + '%');
+}
+
+@function em($a, $b) {
+    @return unquote(ratio($a, $b, 1) + 'em');
+}

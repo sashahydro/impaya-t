@@ -3,12 +3,12 @@
 
 // COLORS
 $white: #fff;
-$gray-100: #f7f8f9;
-$gray-200: #E5E8EC;
+$gray-100: #fcfcfc;
+$gray-200: #E8e8e8;
 $gray-300: #C4C9CE;
 $gray-400: #A8AFB7;
 $gray-500: #8C959F;
-$gray-600: #707C87;
+$gray-600: #868686;
 $gray-700: #54626F;
 $gray-800: #384857;
 $gray-900: #1C2E3F;
@@ -29,18 +29,18 @@ $grays: (
 
 
 $blue: #3E72D8;
-$green: #3ec5a3; // #43C370;
+$green: #35DFC1;; // #43C370;
 $yellow: #FFC500;
 $red: #F1505A;
 $purple: #A469CD;
 $orange: #FF8E5C;
 
-$primary: $yellow;// #4bb4a3; // rgb(171, 115, 165);
-$secondary: $blue;
+$primary: $blue;// #4bb4a3; // rgb(171, 115, 165);
+$secondary: $yellow;
 $tertiary: $gray-400;
 $warning: $yellow;
 $danger: $red;
-$info: $purple;
+$info: $green;
 $success: $green;
 $dark: $black;
 $gray: $gray-300;
@@ -52,7 +52,7 @@ $theme-colors: (
     "tertiary": $tertiary,
     "warning": $warning,
     "danger": $danger,
-    "info": $purple,
+    "info": $green,
     "success": $success,
     "dark": $dark,
     "light": $light,
@@ -74,3 +74,28 @@ $font-sizes: (
 ) !default;
 
 $headings-font-weight: normal;
+
+
+
+$btn-padding-y: 0.75em;
+$btn-padding-x: 2.33em;
+$btn-font-size: 12px;
+
+$btn-border-radius: 2em;
+
+
+$form-label-font-size: 12px;
+$form-label-color: $gray-600;
+
+
+$input-font-size: 12px;
+$input-color: $gray-600;
+$input-border-radius: 2px;
+$input-bg: $gray-100;
+$input-border-color: $gray-200;
+$form-feedback-font-size: 12px;
+
+
+$modal-content-border-color: $white;
+$modal-backdrop-bg: $dark;
+$modal-backdrop-opacity: 0.8;

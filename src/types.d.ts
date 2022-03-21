@@ -30,5 +30,3 @@ interface Wallet extends DBUnit {
     currency: Currency;
     title: string;
 }
-
-

@@ -1,9 +1,9 @@
 import { useState } from "react";
-import BootstrapModal from 'react-bootstrap/modal';
 import store from "../store/store";
 import UiCard from "../ui/ui-card";
 import UiWallet from "../ui/ui-wallet";
 import AddWallet from "./add-wallet";
+import AddCard from './add-card';
 import './home-view.scss';
 
 export default function HomeView() {
@@ -49,6 +49,7 @@ export default function HomeView() {
                 </div>
             </div>
 
+
             <AddWallet
                 isShown={isAddWalletShown}
                 onHide={() => { showAddWallet(false); }}
@@ -74,6 +75,11 @@ export default function HomeView() {
                     {renderAddBtn('Добавить карту', 2, showAddCard)}
                 </div>
             </div>
+
+            <AddCard
+                isShown={isAddCardShown}
+                onHide={() => { showAddCard(false); }}
+            />
         </section>
     );
 }

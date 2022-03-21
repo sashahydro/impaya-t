@@ -42,7 +42,7 @@ export default function UiWallet({ wallet }: {
 
             <div className="wallet-currency">
                 <span>Валюта:</span>
-                <span className="ml-2">{wallet.currency.key.toUpperCase()}</span>
+                <span className="ms-1">{wallet.currency.key.toUpperCase()}</span>
             </div>
         </div>
     );

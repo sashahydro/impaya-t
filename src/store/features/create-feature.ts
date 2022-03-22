@@ -46,7 +46,7 @@ export default function createFeature<T extends DBUnit>(path: ApiDataKeys) {
                     })
                     .addCase(createFn.fulfilled, (state, action) => {
                         state[action.payload.id] = action.payload as Draft<T>;
-                    })
+                    });
             }
         })
     }

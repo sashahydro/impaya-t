@@ -6,8 +6,7 @@ import BootstrapButton from 'react-bootstrap/Button';
 import BootstrapModal from 'react-bootstrap/modal';
 import BootstrapForm from 'react-bootstrap/form';
 import UiFormGroup from '../ui/ui-form-group';
-import store from '../store/store';
-import { useDispatch } from '../store/hooks';
+import { useDispatch, useSelector } from '../store/hooks';
 import { createWallet } from '../store/features/wallets';
 
 interface AddWalletProps {
@@ -22,9 +21,10 @@ export default function AddWallet({
     onHide
 }: AddWalletProps) {
     const dispatch = useDispatch();
-    const { currencies } = store.getState();
+    const currencies = useSelector(state => state.currencies);
     const currencyOptions = Object.values(currencies);
 
+    const [inProgress, setInProgress] = useState(false);
     const [title, setTitle] = useState('');
     const [titleTouched, setTitleTouched] = useState(false);
     const [amount, setAmount] = useState(0);
@@ -100,7 +100,9 @@ export default function AddWallet({
     async function addWallet(e: React.SyntheticEvent) {
         e.preventDefault();
 
-        if (!isFormValid) return;
+        if (inProgress || !isFormValid) return;
+
+        setInProgress(true);
 
         // already checked in currencyValidState hook
         const currency = currencies[selectedCurrency!];
@@ -119,6 +121,8 @@ export default function AddWallet({
         } catch (e) {
             // handle error
         }
+
+        setInProgress(false);
     }
 
 
@@ -128,7 +132,11 @@ export default function AddWallet({
         setAmount(0);
         setCurrency(defaultCurrency);
 
-        [setAmountTouched, setSelectedCurrencyTouched, setTitleTouched].forEach((cb) => cb(false));
+        [
+            setAmountTouched,
+            setSelectedCurrencyTouched,
+            setTitleTouched
+        ].forEach((cb) => cb(false));
     }
 
 
@@ -140,13 +148,14 @@ export default function AddWallet({
             show={isShown}
             keyboard
             onHide={onHide}>
-            <BootstrapModal.Header closeButton>Добавить кошелек</BootstrapModal.Header>
+            <BootstrapModal.Header closeButton><div className="modal-h-custom">Добавить кошелек</div></BootstrapModal.Header>
 
             <BootstrapModal.Body>
                 <BootstrapForm onSubmit={addWallet}>
                     <UiFormGroup controlId="walletTitle">
                         <span>Наименование</span>
                         <BootstrapForm.Control
+                            autoFocus
                             value={title}
                             isInvalid={!!titleValidState && titleTouched}
                             onChange={onTitleChange}

@@ -1,17 +1,18 @@
 import { useState } from "react";
-import store from "../store/store";
 import UiCard from "../ui/ui-card";
 import UiWallet from "../ui/ui-wallet";
 import AddWallet from "./add-wallet";
 import AddCard from './add-card';
 import './home-view.scss';
+import { useSelector } from "../store/hooks";
 
 export default function HomeView() {
     const [isAddCardShown, showAddCard] = useState(false);
     const [isAddWalletShown, showAddWallet] = useState(false);
 
 
-    const { wallets, cards } = store.getState();
+    const wallets = useSelector(state => state.wallets);
+    const cards = useSelector(state => state.cards);
 
     const walletsArr = Object.values(wallets);
     const cardsArr = Object.values(cards);
@@ -31,6 +32,8 @@ export default function HomeView() {
             <div className="add-tender-btn_text">{text}</div>
         </div>
     );
+
+    console.log(cards)
 
     return (
         <section>

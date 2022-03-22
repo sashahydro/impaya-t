@@ -13,9 +13,8 @@ interface Card extends DBUnit {
     card_expire: string | null;
     card_holder: string | null;
     card_number: string | null;
-    currency: Currency;
-    system: 'Mastercard' | 'Visa';
-    title: string;
+    // currency: Currency;
+    system: string;
 }
 
 interface Transaction extends DBUnit {
@@ -30,3 +29,5 @@ interface Wallet extends DBUnit {
     currency: Currency;
     title: string;
 }
+
+type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;

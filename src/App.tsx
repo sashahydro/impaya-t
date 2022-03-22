@@ -13,6 +13,7 @@ import DashboardSidebar from './views/dashboard-sidebar';
 import PageNotFound from './views/page-not-found';
 import './styles/app.scss';
 import HomeView from './views/home-view';
+import TransactionsView from './views/transactions-view';
 
 
 
@@ -95,7 +96,7 @@ function App() {
                     />
                     <Route
                         path="/transactions"
-                        element={<div>bbb</div>}
+                        element={<TransactionsView /> }
                     />
                     <Route
                         path="/*"

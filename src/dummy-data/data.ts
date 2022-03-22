@@ -41,18 +41,14 @@ const cards: Card[] = [
         card_expire: null,
         card_holder: null,
         card_number: '1334',
-        currency: copy(currencies[0]),
-        system: 'Mastercard',
-        title: 'Title #1'
+        system: 'MasterCard'
     },
     {
         id: getId('card'),
         card_expire: null,
         card_holder: null,
         card_number: '5776',
-        currency: copy(currencies[1]),
-        system: 'Visa',
-        title: 'Title #2'
+        system: 'Visa'
     }
 ];
 
